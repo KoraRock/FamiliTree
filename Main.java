@@ -1,88 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
-// Класс людей  
-class Person {
-    private String name;
-    private int birthYear;
-    private Person mother;
-    private Person father;
-    private List<Person> children;
-    
-    public Person(String name, int birthYear) {
-        this.name = name;
-        this.birthYear = birthYear;
-        this.children = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public Person getMother() {
-        return mother;
-    }
-
-    public void setMother(Person mother) {
-        this.mother = mother;
-    }
-
-    public Person getFather() {
-        return father;
-    }
-
-    public void setFather(Person father) {
-        this.father = father;
-    }
-
-    public void addChild(Person child) {
-        this.children.add(child);
-    }
-
-    public List<Person> getChildren() {
-        return children;
-    }
-
-}
-
-
-// класс семейного древа
-class FamilyTree {
-    private List<Person> people;
-
-    public FamilyTree() {
-        this.people = new ArrayList<>();
-    }
-
-    public List<Person> getChildren(Person parent) {
-        return parent.getChildren();
-    }
-
-    public Person findPersonByName (String name) {
-        for(Person person : people) {
-            if(person.getName().equals(name)){
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public void addPerson(Person person) {
-        this.people.add(person);
-    }
-}
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -107,10 +23,38 @@ public class Main {
         familyTree.addPerson(egor);
         familyTree.addPerson(eva);
 
-        List<Person> annasChildren = familyTree.getChildren(anna);
-        for(Person child:annasChildren){
-            System.out.println("Anna's child: "+child.getName());
+// // first Home Work:
+        // List<Person> annasChildren = familyTree.getChildren(anna);
+        // for(Person child:annasChildren){
+        //     System.out.println("Anna's child: "+child.getName());
+        // }
+
+// second Home Work: 
+        FileOperations fileOps = new FileOperationsImpl();
+
+        try {
+            fileOps.saveToFile(familyTree, "familiTree.dat");
+            System.out.println("Famili tree saved to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        FamilyTree loadedFamilyTree = null;
+
+        try {
+            loadedFamilyTree = fileOps.loadFromFile("familiTree.dat");
+            System.out.println("Famili tree loaded from file.");
+        } catch (IOException| ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if(loadedFamilyTree!=null) {
+            for(Person person:loadedFamilyTree.getPeople()){
+                System.out.println("Loaded person: " + person.getName() + ", born in " + person.getBirthYear());
+            }
+        }
+ 
+
         
     }
 }
