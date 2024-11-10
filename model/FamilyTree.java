@@ -1,9 +1,13 @@
+package model;
+
 // класс семейного древа
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class FamilyTree implements Serializable {
+public class FamilyTree implements Serializable, Iterable<Person> {
     private static final long serialVersionUID = 1L;    
     private List<Person> people;
 
@@ -30,5 +34,18 @@ public class FamilyTree implements Serializable {
 
     public List<Person> getPeople() {
         return people;
+    }
+
+    @Override
+    public Iterator<Person> iterator() {
+        return people.iterator();
+    }
+
+    public void sortByName() {
+        Collections.sort(people, (p1, p2) -> p1.getName().compareTo(p2.getName()));
+    }
+
+    public void sortByBirthYear() {
+        Collections.sort(people, (p1, p2) -> Integer.compare(p1.getBirthYear(), p2.getBirthYear()));
     }
 }

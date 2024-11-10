@@ -1,3 +1,5 @@
+package model;
+
 // Класс людей
 import java.io.*;
 import java.util.ArrayList;

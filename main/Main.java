@@ -1,4 +1,10 @@
+package main;
+
 import java.io.IOException;
+import model.FamilyTree;
+import model.Person;
+import service.FileOperations;
+import service.FileOperationsImpl;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,13 +34,28 @@ public class Main {
         // for(Person child:annasChildren){
         //     System.out.println("Anna's child: "+child.getName());
         // }
+// third Home Work:
+
+        System.out.println("Сортировка по имени: ");
+        familyTree.sortByName();
+        for (Person person : familyTree) {
+            System.out.println(person.getName() + " - " + person.getBirthYear());
+        }
+
+        System.out.println("\nСортировка по дате рождения: ");
+        familyTree.sortByBirthYear();
+        for (Person person : familyTree) {
+            System.out.println(person.getName() + " - " + person.getBirthYear());
+        }
+
+
 
 // second Home Work: 
         FileOperations fileOps = new FileOperationsImpl();
 
         try {
             fileOps.saveToFile(familyTree, "familiTree.dat");
-            System.out.println("Famili tree saved to file.");
+            System.out.println("\nFamili tree saved to file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
