@@ -3,10 +3,10 @@ package service;
 import java.io.IOException;
 import model.FamilyTree;
 
-public interface FileOperations {
-    void saveToFile(FamilyTree familyTree, String fileName) throws IOException;
+public interface FileOperations<T> {
+    void saveToFile(FamilyTree<T> familyTree, String fileName) throws IOException;
 
-    FamilyTree loadFromFile(String fileName) throws IOException, ClassNotFoundException;
+    FamilyTree<T> loadFromFile(String fileName) throws IOException, ClassNotFoundException;
 }
 
 

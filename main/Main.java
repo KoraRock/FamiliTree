@@ -8,7 +8,7 @@ import service.FileOperationsImpl;
 
 public class Main {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Person> familyTree = new FamilyTree();
 
         Person ivan = new Person("Ivan", 1960);
         Person anna = new Person("Anna", 1961);
@@ -24,17 +24,17 @@ public class Main {
         anna.addChild(eva);
         anna.addChild(egor);
 
-        familyTree.addPerson(ivan);
-        familyTree.addPerson(anna);
-        familyTree.addPerson(egor);
-        familyTree.addPerson(eva);
+        familyTree.addMember(ivan);
+        familyTree.addMember(anna);
+        familyTree.addMember(egor);
+        familyTree.addMember(eva);
 
 // // first Home Work:
         // List<Person> annasChildren = familyTree.getChildren(anna);
         // for(Person child:annasChildren){
         //     System.out.println("Anna's child: "+child.getName());
         // }
-// third Home Work:
+// third + fourth Home Work:
 
         System.out.println("Сортировка по имени: ");
         familyTree.sortByName();
@@ -60,17 +60,17 @@ public class Main {
             e.printStackTrace();
         }
 
-        FamilyTree loadedFamilyTree = null;
+        FamilyTree<Person> loadedFamilyTree = null;
 
         try {
             loadedFamilyTree = fileOps.loadFromFile("familiTree.dat");
-            System.out.println("Famili tree loaded from file.");
+            System.out.println("\nFamili tree loaded from file.");
         } catch (IOException| ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         if(loadedFamilyTree!=null) {
-            for(Person person:loadedFamilyTree.getPeople()){
+            for(Person person:loadedFamilyTree.getMembers()){
                 System.out.println("Loaded person: " + person.getName() + ", born in " + person.getBirthYear());
             }
         }
