@@ -3,29 +3,20 @@ package model;
 // класс семейного древа
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 
-public class FamilyTree<T> implements Serializable, Iterable<T> {
+public class FamilyTree<T extends Person> implements Serializable {
     private static final long serialVersionUID = 1L;    
-    private List<T> members;
+    private List<T> members = new ArrayList<>();
 
-    public FamilyTree() {
-        this.members = new ArrayList<>();
+    public void addMember(T person) {
+        this.members.add(person);
     }
 
-    public FamilyTree(List<T> members) {
-        this.members = members;
-    }
-
-    public void addMember(T member) {
-        this.members.add(member);
-    }
-
-    public List<Person> getChildren(Person parent) {
-        return parent.getChildren();
-    }
+    // public List<Person> getChildren(Person parent) {
+    //     return parent.getChildren();
+    // }
 
     // public Person findPersonByName (String name) {
     //     for(T person : members) {
@@ -37,22 +28,15 @@ public class FamilyTree<T> implements Serializable, Iterable<T> {
     // }
 
     public void sortByName() {
-        Collections.sort(members, (p1, p2) -> p1.toString().compareTo(p2.toString()));
+        members.sort(Comparator.comparing(Person::getName));
     }
 
     public void sortByBirthYear() {
-        if (members.get(0) instanceof Person) {
-            Collections.sort(members, (p1,p2) -> Integer.compare(((Person) p1).getBirthYear(), ((Person) p2).getBirthYear()));
-        }
+        members.sort(Comparator.comparingInt(Person::getBirthYear));
     }
 
-    public List<T> getMembers() {
-        return members;
+    public List<Person> getMembers() {
+        return new ArrayList<>(members);
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return members.iterator();
-    }
-   
 }
